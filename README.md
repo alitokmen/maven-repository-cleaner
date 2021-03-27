@@ -16,7 +16,7 @@ One downside of Maven's methodology is that as these artifacts evolve in time, a
 
 I did spend some hours looking at this problem and to the answers, many of them rely on the `atime` (which is the last access time on UNIX systems), which is an unreliable solution for two reasons:
 
-1. Most UNIX systems (including Linux and macOS) update the `atime` irregularly at best, and that is for a reason: a complete implementation of `atime` would imply the whole file system would be slowed down by having to update the `atime` every time a file is read, moreover having a such high extreme number of updates would very rapidly wear out the modern, high performance SSD drives
+1. Most UNIX systems (including Linux and macOS) update the `atime` irregularly at best, and that is for a reason: a complete implementation of `atime` would imply the whole file system would be slowed down by having to update (i.e., write to the disk) the `atime` every time a file is read, moreover having a such an extreme number of updates would very rapidly wear out the modern, high performance SSD drives
 1. On a CI/CD environment, the VM that's used to build your Maven project will have its Maven repository restored from a shared storage, which in turn will make the `atime` get set to a "recent" value
 
 # How does this tool work?
@@ -49,3 +49,16 @@ wget https://raw.githubusercontent.com/alitokmen/maven-repository-cleaner/main/m
 chmod +x maven-repository-cleaner.sh
 ./maven-repository-cleaner.sh
 ```
+# Does the tool have limitations?
+
+AFAIK, two limitations:
+
+1. The start directory is `~/.m2/repository/`
+1. The tool believes, for example, that the version `1.1` is older than the version `1.1-alpha-2`
+
+# What is the license?
+
+This tool is licensed under the MIT License, which means that:
+
+* There are no warranties, if anything breaks you can't hold me responsible for it
+* You can do "pretty much anything" with the tool, without having to ask me, including cloning, modifying and even selling it
