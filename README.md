@@ -44,6 +44,8 @@ In practice, if you have a hierarchy such as:
 
 Just use the below three lines, either at the beginning or at the end of the build:
 
-`wget https://raw.githubusercontent.com/alitokmen/maven-repository-cleaner/main/maven-repository-cleaner.sh`
-`chmod +x maven-repository-cleaner.sh`
-`./maven-repository-cleaner.sh`
+```
+wget https://raw.githubusercontent.com/alitokmen/maven-repository-cleaner/main/maven-repository-cleaner.sh
+chmod +x maven-repository-cleaner.sh
+./maven-repository-cleaner.sh
+```
