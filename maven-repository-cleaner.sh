@@ -41,7 +41,7 @@ cleanDirectory() {
 	done
 }
 
-cd ~/.m2/
+cd ~/.m2/repository/
 du -sh .
 cleanDirectory
 du -sh .
