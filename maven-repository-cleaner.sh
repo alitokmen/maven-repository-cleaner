@@ -23,7 +23,10 @@
 cleanDirectory() {
 	local previousVersion=""
 	for d in `ls -d * | sort -V`; do
-		if [[ -d "$d" ]]; then
+		if [ "$d" = "0" ] || [ "$d" = "0]" ]; then
+			echo "    > deleting awkward version: $PWD/$d"
+			rm -Rf "$d"
+		elif [[ -d "$d" ]]; then
 			if [[ $d =~ ^[0-9]+\.[0-9]+((\.|-).*)?$ ]]; then
 				echo "  > checking version: $PWD/$d"
 				if ((${#previousVersion} > 0)); then
@@ -34,6 +37,7 @@ cleanDirectory() {
 			else
 				echo "checking artifact: $PWD/$d"
 				cd "$d"
+				previousVersion=""
 				cleanDirectory
 				cd ..
 			fi
