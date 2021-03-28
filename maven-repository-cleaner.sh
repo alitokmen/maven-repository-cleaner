@@ -30,8 +30,12 @@ cleanDirectory() {
 			if [[ $d =~ ^[0-9]+\.[0-9]+((\.|-).*)?$ ]]; then
 				echo "  > checking version: $PWD/$d"
 				if ((${#previousVersion} > 0)); then
-					echo "    > deleting previous version: $PWD/$previousVersion"
-					rm -Rf "$previousVersion"
+					if test `find "$PWD/$previousVersion" -mmin +360`; then
+						echo "    > deleting previous version: $PWD/$previousVersion"
+						rm -Rf "$previousVersion"
+					else
+						echo "    > skipping previous version aged 6 hours or less: $PWD/$previousVersion"
+					fi
 				fi
 				previousVersion="$d"
 			else
