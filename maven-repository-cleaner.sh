@@ -30,22 +30,25 @@ cleanDirectory() {
 			echo "    > deleting awkward version: $PWD/$directory"
 			rm -Rf "$d"
 		elif [[ -d "$directory" ]]; then
-			if [[ $directory =~ ^[0-9]+\.[0-9]+((\.|-).*)?$ ]]; then
+			if [[ "$directory" =~ ^[0-9]+\.[0-9]+((\.|-|_).*)?$ ]]; then
 				local old="$previousVersion"
 				local new="$directory"
 				echo "  > checking version: $PWD/$directory"
+
+				# Since the output is sorted by (ascending) versions, the fact that there is a previous folder
+				# indicates that there are two versions and that the previous folder is an older version
 				if ((${#previousVersion} > 0)); then
-					# Since the output is sorted by (ascending) versions,
-					# the fact that there is a previous folder indicates that there are two versions in that folder
-					# and that the previous folder is an older version
-					if [[ ${directory,,} =~ ^[0-9]+\.[0-9]+.*([\.\-_]alpha|[\.\-_]beta|-m\d|-rc|-snapshot).*$ ]] && [[ $previousVersion =~ ^[0-9\.]+$ ]]; then
-						# Only caveat: sorting happens "the wrong way round" for alpha, beta, etc. versions
-						# The current directory has such a name (and the previous directory didn't),
-						# so consider current (alpha, beta, etc.) is actually older
+					# Only caveat: sorting happens "the wrong way round" for alpha, beta, etc. versions
+					# The current directory has such a name (and the previous directory didn't),
+					# so consider current (alpha, beta, etc.) is actually older
+					if [[ "${directory,,}" =~ ^[0-9]+\.[0-9]+(\.|-|_)(alpha|beta|m[0-9]+|snapshot) ]] \
+						&& [[ "$previousVersion" =~ ^[0-9\.]+$ ]] && [[ "${directory,,}" =~ ^"$previousVersion" ]];
+					then
 						old="$directory"
 						new="$previousVersion"
-						echo "    > version $directory has a non-numeric, assuming it is older than $previousVersion"
+						echo "    > version $directory is probably older (alpha, beta, etc.) than $previousVersion"
 					fi
+
 					if test `find "$PWD/$old" -mmin +360 -print -quit`; then
 						echo "    > deleting previous version: $PWD/$old"
 						rm -Rf "$old"
