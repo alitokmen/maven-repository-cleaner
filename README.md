@@ -32,7 +32,7 @@ In practice, if you have a hierarchy such as:
   * `artifact-name`
     * `1.8`
     * `1.10`
-    * ´1.10-alpha-3`
+    * `1.10-alpha-3`
     * `1.2`
 
 ... `maven-repository-cleaner.sh` script will:
