@@ -32,13 +32,14 @@ In practice, if you have a hierarchy such as:
   * `artifact-name`
     * `1.8`
     * `1.10`
+    * ´1.10-alpha-3`
     * `1.2`
 
 ... `maven-repository-cleaner.sh` script will:
 
 1. Navigate to `artifact-group`
 1. In `artifact-group`, navigate to `artifact-name`
-1. In `artifact-name`, delete the subfolders `1.8` and `1.2`, as `1.10` is superior to both `1.2` and `1.8`
+1. In `artifact-name`, delete the subfolders `1.8`, `1.10-alpha-3` and `1.2`, as `1.10` is superior to `1.2`, `1.8` and `1.10-alpha-3`
 
 # How do I run this tool in my CI/CD environment?
 
@@ -51,10 +52,7 @@ chmod +x maven-repository-cleaner.sh
 ```
 # Does the tool have limitations?
 
-AFAIK, two limitations:
-
-1. The start directory is `~/.m2/repository/`
-1. Though the tool does its best to reorder `alpha`, `beta`, etc. versions it might not be perfect
+The only limitation is that the start directory is `~/.m2/repository/`, though some forks have fixed that 😉
 
 # What is the license?
 
