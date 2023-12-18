@@ -54,7 +54,7 @@ chmod +x maven-repository-cleaner.sh
 AFAIK, two limitations:
 
 1. The start directory is `~/.m2/repository/`
-1. The tool believes, for example, that the version `1.1` is older than the version `1.1-alpha-2`
+1. Though the tool does its best to reorder `alpha`, `beta`, etc. versions it might not be perfect
 
 # What is the license?
 
