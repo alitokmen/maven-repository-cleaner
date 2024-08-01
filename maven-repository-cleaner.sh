@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2021-2023 S. Ali Tokmen | https://github.com/alitokmen/maven-repository-cleaner/
+# Copyright 2021-2024 S. Ali Tokmen | https://github.com/alitokmen/maven-repository-cleaner/
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -41,8 +41,9 @@ cleanDirectory() {
 					# Only caveat: sorting happens "the wrong way round" for alpha, beta, etc. versions
 					# The current directory has such a name (and the previous directory didn't),
 					# so consider current (alpha, beta, etc.) is actually older
-					if [[ "${directory,,}" =~ ^[0-9]+\.[0-9]+(\.|-|_)(alpha|beta|m[0-9]+|snapshot) ]] \
-						&& [[ "$previousVersion" =~ ^[0-9\.]+$ ]] && [[ "${directory,,}" =~ ^"$previousVersion" ]];
+					local directoryLowercase=$(echo "$y" | tr '[:upper:]' '[:lower:]')
+					if [[ "$directoryLowercase" =~ ^[0-9]+\.[0-9]+(\.|-|_)(alpha|beta|m[0-9]+|snapshot) ]] \
+						&& [[ "$previousVersion" =~ ^[0-9\.]+$ ]] && [[ "$directoryLowercase" =~ ^"$previousVersion" ]];
 					then
 						old="$directory"
 						new="$previousVersion"
