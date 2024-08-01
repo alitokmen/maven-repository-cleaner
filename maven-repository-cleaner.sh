@@ -41,7 +41,7 @@ cleanDirectory() {
 					# Only caveat: sorting happens "the wrong way round" for alpha, beta, etc. versions
 					# The current directory has such a name (and the previous directory didn't),
 					# so consider current (alpha, beta, etc.) is actually older
-					local directoryLowercase=$(echo "$y" | tr '[:upper:]' '[:lower:]')
+					local directoryLowercase=$(echo "$directory" | tr '[:upper:]' '[:lower:]')
 					if [[ "$directoryLowercase" =~ ^[0-9]+\.[0-9]+(\.|-|_)(alpha|beta|m[0-9]+|snapshot) ]] \
 						&& [[ "$previousVersion" =~ ^[0-9\.]+$ ]] && [[ "$directoryLowercase" =~ ^"$previousVersion" ]];
 					then
